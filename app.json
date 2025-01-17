@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "ShoppingListApp-ReactNative",
+    "displayName": "ShoppingListApp-ReactNative",
     "slug": "ShoppingListApp-ReactNative",
     "version": "1.0.0",
     "orientation": "portrait",
