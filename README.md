@@ -27,31 +27,20 @@ Installation
 Follow these steps to install and run the app:
 
 Clone the repository:
+`git clone https://github.com/Khensani-Lebese/shopping-list-app.git`
 
-bash
-Copy
-Edit
-git clone https://github.com/Khensani-Lebese/shopping-list-app.git
 Install dependencies:
 
-bash
-Copy
-Edit
-cd shopping-list-app
-npm install
+`cd shopping-list-app`
+
+`npm install`
 Install dependencies for React Native:
 
-bash
-Copy
-Edit
-npm install @react-native-async-storage/async-storage @react-redux/redux-thunk redux react-redux crypto-js
+`npm install @react-native-async-storage/async-storage @react-redux/redux-thunk redux react-redux crypto-js`
 Start the app:
 
-bash
-Copy
-Edit
-npx react-native run-android # For Android
-npx react-native run-ios # For iOS
+`npx react-native run-android # For Android`
+`npx react-native run-ios # For iOS`
 
 Technologies Used
 
@@ -62,9 +51,7 @@ CryptoJS for securely encrypting and decrypting passwords
 React Navigation for routing between screens
 
 Folder Structure
-plaintext
-Copy
-Edit
+
 src/
 ├── components/
 │ ├── AddItemForm.js # Form to add a new product
