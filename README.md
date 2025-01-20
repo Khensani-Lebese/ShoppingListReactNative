@@ -27,7 +27,7 @@ Installation
 Follow these steps to install and run the app:
 
 Clone the repository:
-`git clone https://github.com/Khensani-Lebese/shopping-list-app.git`
+`git clone https://github.com/Khensani-Lebese/ShoppingListReactNative.git`
 
 Install dependencies:
 
