@@ -20,10 +20,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.khensani29.ShoppingListAppReactNative"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b07e2e0e-1957-4bf0-bc9d-a6ddb245d737"
+      }
     }
   }
 }
