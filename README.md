@@ -50,22 +50,6 @@ AsyncStorage for persisting data locally on the device
 CryptoJS for securely encrypting and decrypting passwords
 React Navigation for routing between screens
 
-Folder Structure
-
-src/
-├── components/
-│ ├── AddItemForm.js # Form to add a new product
-│ ├── Home.js # Home screen to display the shopping list
-│ └── ShoppingItem.js # Component to display each product
-├── redux/
-│ ├── actions.js # Redux actions to manage products and user login
-│ ├── reducer.js # Redux reducer to handle state changes
-│ └── store.js # Redux store setup
-├── screens/
-│ ├── Login.js # Login screen
-│ └── Register.js # Register screen
-└── App.js # Main app entry point
-
 How It Works
 
 Registration
