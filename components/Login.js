@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CryptoJS from "crypto-js"; // For decryption
+import { loadUserProducts } from "../redux/actions";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -30,8 +31,13 @@ const Login = ({ navigation }) => {
         return;
       }
 
-      // Dispatch user to Redux
+      // Fetch user's products from AsyncStorage
+      const userProducts = await AsyncStorage.getItem(`${email}_products`);
+      const products = userProducts ? JSON.parse(userProducts) : [];
+
+      // Dispatch user and products to Redux
       dispatch({ type: "LOGIN_USER", payload: { email, name } });
+      dispatch({ type: "SET_PRODUCTS", payload: products });
 
       Alert.alert("Success", "Login successful!");
       navigation.navigate("Home");

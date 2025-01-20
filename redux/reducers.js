@@ -14,9 +14,19 @@ const appReducer = (state = initialState, action) => {
       };
 
     case "LOGIN_USER":
+      let userProducts = [];
+      try {
+        const savedProducts = AsyncStorage.getItem(
+          `products_${action.payload.email}`
+        );
+        userProducts = savedProducts ? JSON.parse(savedProducts) : [];
+      } catch (error) {
+        console.error("Error fetching user products:", error);
+      }
       return {
         ...state,
-        currentUser: action.payload,
+        currentUser: { email: action.payload.email, name: action.payload.name },
+        products: action.payload.products, // Store products
       };
 
     case "LOGOUT_USER":
@@ -82,6 +92,37 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         products: toggledProducts,
+      };
+
+    case "EDIT_ITEM":
+      const editedProducts = state.products.map((product) =>
+        product.id === action.payload.id
+          ? { ...product, name: action.payload.name }
+          : product
+      );
+      try {
+        AsyncStorage.setItem(
+          `products_${state.currentUser.email}`,
+          JSON.stringify(editedProducts)
+        );
+      } catch (error) {
+        console.error("Error editing product:", error);
+      }
+      return {
+        ...state,
+        products: editedProducts,
+      };
+
+    case "SET_PRODUCTS":
+      return {
+        ...state,
+        products: action.payload,
+      };
+
+    case "CLEAR_PRODUCTS":
+      return {
+        ...state,
+        products: [],
       };
 
     default:

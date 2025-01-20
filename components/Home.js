@@ -25,7 +25,7 @@ const Home = ({ navigation }) => {
           </Text>
           <AddItemForm />
           <View>
-            {products.length > 0 ? (
+            {products.length > 0 && products ? (
               products.map((item) => <ShoppingItem key={item.id} item={item} />)
             ) : (
               <Text>No products found.</Text>

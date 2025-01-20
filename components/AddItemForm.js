@@ -1,40 +1,56 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
+import { View, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addItem } from "../redux/actions";
 
 const AddItemForm = () => {
-  const [itemName, setItemName] = useState("");
+  const [productName, setProductName] = useState("");
   const dispatch = useDispatch();
+  const { currentUser, products } = useSelector((state) => state);
 
-  const handleAddItem = () => {
-    if (itemName.trim()) {
-      const newItem = {
-        id: Date.now(),
-        name: itemName,
-        purchased: false,
-      };
-      dispatch(addItem(newItem));
-      setItemName("");
+  const handleAddProduct = async () => {
+    if (!productName.trim()) {
+      Alert.alert("Error", "Product name cannot be empty!");
+      return;
     }
+
+    const newProduct = { id: Date.now().toString(), name: productName };
+
+    // Update Redux store
+    dispatch(addItem(newProduct));
+
+    // Save to AsyncStorage
+    const updatedProducts = [...products, newProduct];
+    await AsyncStorage.setItem(
+      `${currentUser.email}_products`,
+      JSON.stringify(updatedProducts)
+    );
+
+    setProductName("");
+    Alert.alert("Success", "Product added!");
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <TextInput
         style={styles.input}
-        placeholder="Add Item"
-        value={itemName}
-        onChangeText={setItemName}
+        placeholder="Enter product name"
+        value={productName}
+        onChangeText={setProductName}
       />
-      <Button title="Add" onPress={handleAddItem} />
+      <Button title="Add Product" onPress={handleAddProduct} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flexDirection: "row", marginBottom: 20 },
-  input: { flex: 1, borderBottomWidth: 1, marginRight: 10 },
+  input: {
+    borderWidth: 1,
+    padding: 10,
+    marginBottom: 10,
+    width: "100%",
+  },
 });
 
 export default AddItemForm;

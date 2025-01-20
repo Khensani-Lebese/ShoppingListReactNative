@@ -30,22 +30,20 @@ export const registerUser = (userData) => async (dispatch) => {
 
 export const loginUser = (email, password) => async (dispatch) => {
   try {
-    const users = await AsyncStorage.getItem("users");
-    const parsedUsers = users ? JSON.parse(users) : [];
-
-    const user = parsedUsers.find(
-      (u) => u.email === email && u.password === password
-    );
-    if (!user) {
-      throw new Error("Invalid credentials");
+    // Simulate fetching user data (replace with your real API logic if necessary)
+    const storedUser = await AsyncStorage.getItem(`user_${email}`);
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      if (user.password === password) {
+        dispatch({ type: "LOGIN_USER", payload: user });
+      } else {
+        throw new Error("Invalid password");
+      }
+    } else {
+      throw new Error("User not found");
     }
-
-    dispatch({
-      type: "LOGIN_USER",
-      payload: user,
-    });
   } catch (error) {
-    console.error(error.message);
+    console.error("Login failed:", error);
   }
 };
 
@@ -70,6 +68,25 @@ export const loadUserProducts = (products) => ({
   payload: products,
 });
 
+export const editItem = (id, name) => ({
+  type: "EDIT_ITEM",
+  payload: { id, name },
+});
+
+export const setProducts = (products) => ({
+  type: "SET_PRODUCTS",
+  payload: products,
+});
+
+export const addProduct = (product) => ({
+  type: "ADD_PRODUCT",
+  payload: product,
+});
+
+export const removeProduct = (productId) => ({
+  type: "REMOVE_PRODUCT",
+  payload: productId,
+});
 export const logoutUser = () => ({
   type: "LOGOUT_USER",
 });
