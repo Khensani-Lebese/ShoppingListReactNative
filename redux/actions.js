@@ -50,34 +50,26 @@ export const loginUser = (email, password) => async (dispatch) => {
 };
 
 // Product Actions
-export const loadUserProducts = (email) => async (dispatch) => {
-  try {
-    const products = await AsyncStorage.getItem(`products_${email}`);
-    dispatch({
-      type: "LOAD_USER_PRODUCTS",
-      payload: products ? JSON.parse(products) : [],
-    });
-  } catch (error) {
-    console.error("Error loading user products:", error);
-  }
-};
-
 export const addItem = (item) => ({
-  type: ADD_ITEM,
+  type: "ADD_ITEM",
   payload: item,
 });
 
-export const editItem = (id, updatedItem) => ({
-  type: EDIT_ITEM,
-  payload: { id, updatedItem },
-});
-
 export const deleteItem = (id) => ({
-  type: DELETE_ITEM,
+  type: "DELETE_ITEM",
   payload: id,
 });
 
 export const toggleItem = (id) => ({
-  type: TOGGLE_ITEM,
+  type: "TOGGLE_ITEM",
   payload: id,
+});
+
+export const loadUserProducts = (products) => ({
+  type: "LOAD_USER_PRODUCTS",
+  payload: products,
+});
+
+export const logoutUser = () => ({
+  type: "LOGOUT_USER",
 });

@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState = {
   currentUser: null,
-  products: [],
+  products: [], // This represents the shopping list items.
 };
 
 const appReducer = (state = initialState, action) => {
@@ -19,14 +19,22 @@ const appReducer = (state = initialState, action) => {
         currentUser: action.payload,
       };
 
+    case "LOGOUT_USER":
+      return {
+        ...state,
+        currentUser: null,
+        products: [],
+      };
+
     case "LOAD_USER_PRODUCTS":
       return {
         ...state,
         products: action.payload,
       };
 
-    case "ADD_PRODUCT":
-      const updatedProducts = [...state.products, action.payload];
+    case "ADD_ITEM":
+      const newProduct = action.payload;
+      const updatedProducts = [...state.products, newProduct];
       try {
         AsyncStorage.setItem(
           `products_${state.currentUser.email}`,
@@ -40,7 +48,7 @@ const appReducer = (state = initialState, action) => {
         products: updatedProducts,
       };
 
-    case "DELETE_PRODUCT":
+    case "DELETE_ITEM":
       const filteredProducts = state.products.filter(
         (product) => product.id !== action.payload
       );
@@ -55,6 +63,25 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         products: filteredProducts,
+      };
+
+    case "TOGGLE_ITEM":
+      const toggledProducts = state.products.map((product) =>
+        product.id === action.payload
+          ? { ...product, purchased: !product.purchased }
+          : product
+      );
+      try {
+        AsyncStorage.setItem(
+          `products_${state.currentUser.email}`,
+          JSON.stringify(toggledProducts)
+        );
+      } catch (error) {
+        console.error("Error toggling product:", error);
+      }
+      return {
+        ...state,
+        products: toggledProducts,
       };
 
     default:
